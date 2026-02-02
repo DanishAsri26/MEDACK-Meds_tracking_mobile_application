@@ -18,7 +18,7 @@ class SignupPage extends StatelessWidget {
             right: -50,
             child: CircleAvatar(
               radius: 100,
-              backgroundColor: darkContrastGreen.withOpacity(0.1),
+              backgroundColor: darkContrastGreen.withValues(alpha: 0.1),
             ),
           ),
           Positioned(
@@ -26,7 +26,7 @@ class SignupPage extends StatelessWidget {
             left: -80,
             child: CircleAvatar(
               radius: 120,
-              backgroundColor: darkContrastGreen.withOpacity(0.1),
+              backgroundColor: darkContrastGreen.withValues(alpha: 0.1),
             ),
           ),
           Positioned(
@@ -34,7 +34,7 @@ class SignupPage extends StatelessWidget {
             right: 40,
             child: CircleAvatar(
               radius: 40,
-              backgroundColor: darkContrastGreen.withOpacity(0.05),
+              backgroundColor: darkContrastGreen.withValues(alpha: 0.05),
             ),
           ),
           Positioned(
@@ -42,7 +42,7 @@ class SignupPage extends StatelessWidget {
             right: 20,
             child: CircleAvatar(
               radius: 60,
-              backgroundColor: darkContrastGreen.withOpacity(0.1),
+              backgroundColor: darkContrastGreen.withValues(alpha: 0.1),
             ),
           ),
           
@@ -166,7 +166,7 @@ class SignupPage extends StatelessWidget {
         labelText: label,
         labelStyle: TextStyle(color: Colors.grey[700]),
         filled: true,
-        fillColor: Colors.white.withOpacity(0.9),
+        fillColor: Colors.white.withValues(alpha: 0.9),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: Colors.grey[300]!),

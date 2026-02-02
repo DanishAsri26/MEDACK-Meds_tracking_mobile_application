@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
             left: -60,
             child: CircleAvatar(
               radius: 110,
-              backgroundColor: darkContrastGreen.withOpacity(0.1),
+              backgroundColor: darkContrastGreen.withValues(alpha: 0.1),
             ),
           ),
           Positioned(
@@ -27,7 +27,7 @@ class LoginPage extends StatelessWidget {
             right: -30,
             child: CircleAvatar(
               radius: 50,
-              backgroundColor: darkContrastGreen.withOpacity(0.05),
+              backgroundColor: darkContrastGreen.withValues(alpha: 0.05),
             ),
           ),
           Positioned(
@@ -35,7 +35,7 @@ class LoginPage extends StatelessWidget {
             right: -70,
             child: CircleAvatar(
               radius: 130,
-              backgroundColor: darkContrastGreen.withOpacity(0.1),
+              backgroundColor: darkContrastGreen.withValues(alpha: 0.1),
             ),
           ),
           Positioned(
@@ -43,7 +43,7 @@ class LoginPage extends StatelessWidget {
             left: 20,
             child: CircleAvatar(
               radius: 40,
-              backgroundColor: darkContrastGreen.withOpacity(0.05),
+              backgroundColor: darkContrastGreen.withValues(alpha: 0.05),
             ),
           ),
 
@@ -183,7 +183,7 @@ class LoginPage extends StatelessWidget {
         labelText: label,
         labelStyle: TextStyle(color: Colors.grey[700]),
         filled: true,
-        fillColor: Colors.white.withOpacity(0.9),
+        fillColor: Colors.white.withValues(alpha: 0.9),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: Colors.grey[300]!),
