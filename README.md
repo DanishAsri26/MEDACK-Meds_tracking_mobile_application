@@ -1,16 +1,14 @@
-# lab_5
+# MEDACK (Still in Progress)
 
-A new Flutter project.
+The idea on creating this mobile application came when i reliaze how hard it is for me to help my 
+grandparents who still struggling reading their meds. 
+The fact that i was't there to help them make me sad. 
+They sometime give me a call just to ask about thier meds, it getting difficult for me to help when i cant read properlly the package. 
+So i was thinking what is me or my aunts can just snap it when they get the precribe from Doctor or my grand parents can just snap 
+the package to get the information they needs.
 
-## Getting Started
+## Planned Core function
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* Integrating Gemini AI to extract meds information from package or prescribtion given by pharmacies.
+* Real time update on care giver @ family member side of application.
+* Mini chatbot for  Meds QnA
