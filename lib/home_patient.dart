@@ -10,6 +10,7 @@ class Home_patient extends StatefulWidget {
 
 class _Home_patientState extends State<Home_patient> {
   int _currentIndex = 0;
+  final Color darkContrastGreen = Color(0xFF1B5E20);
 
   final List<Widget> _tabs = [
     HomeTab(),
@@ -24,9 +25,10 @@ class _Home_patientState extends State<Home_patient> {
       body: _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: darkContrastGreen, // Changed from lightGreen
         selectedItemColor: Colors.white,
-        selectedFontSize: 19.0,
+        unselectedItemColor: Colors.white70,
+        selectedFontSize: 16.0,
         unselectedFontSize: 14.0,
         iconSize: 30.0,
         currentIndex: _currentIndex,
@@ -64,6 +66,7 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  final Color darkContrastGreen = Color(0xFF1B5E20);
   final List<bool> _isChecked = [false, false, false, false];
   final List<Map<String, String>> _prescriptions = [
     {'medicine': 'M1', 'time': '08:00 AM', 'dose': '1 tablet'},
@@ -76,6 +79,9 @@ class _HomeTabState extends State<HomeTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: darkContrastGreen, // Changed to match theme
+        foregroundColor: Colors.white, // White text for the dark background
         title: Text('Home',
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
         actions: [
@@ -109,9 +115,9 @@ class _HomeTabState extends State<HomeTab> {
                         style: TextStyle(fontSize: 20),
                       ),
                       Text(
-                        'Michael', // Replace with actual patient name
+                        'Michael',
                         style: TextStyle(
-                            fontSize: 40, fontWeight: FontWeight.bold),
+                            fontSize: 32, fontWeight: FontWeight.bold, color: darkContrastGreen),
                       ),
                     ],
                   ),
@@ -151,6 +157,7 @@ class _HomeTabState extends State<HomeTab> {
         title: Text(medicine, style: TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text('Time: $time, Dose: $dose'),
         trailing: Checkbox(
+          activeColor: darkContrastGreen,
           value: _isChecked[index],
           onChanged: (bool? value) {
             setState(() {
