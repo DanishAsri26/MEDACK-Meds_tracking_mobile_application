@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class GeminiService {
-  final String apiKey = 'AIzaSyDzlSTvKfRKPdWmKioaXYvQi7j3JDDw6fQ';
+  final String apiKey = 'PUT KEY HERE';
   late final GenerativeModel _model;
 
   GeminiService() {
