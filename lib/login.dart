@@ -1,19 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:lab_5/home_patient.dart';
 import 'package:lab_5/signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  Future<void> _login() async {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please enter email and password')));
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home_patient()),
+      );
+    } on FirebaseAuthException catch (e) {
+      String message = 'An error occurred';
+      if (e.code == 'user-not-found') {
+        message = 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        message = 'Wrong password provided.';
+      } else if (e.code == 'invalid-email') {
+        message = 'The email address is badly formatted.';
+      }
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Define the same colors as the Signup Page for consistency
     final Color darkContrastGreen = Color(0xFF1B5E20);
     final Color lightBgColor = Color(0xFFF1F8E9);
 
     return Scaffold(
-      backgroundColor: lightBgColor, // Set background color
+      backgroundColor: lightBgColor,
       body: Stack(
         children: [
-          // Contrasting background circles
           Positioned(
             top: -60,
             left: -60,
@@ -47,7 +94,6 @@ class LoginPage extends StatelessWidget {
             ),
           ),
 
-          // Main Content centered vertically
           SafeArea(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -86,11 +132,13 @@ class LoginPage extends StatelessWidget {
                             SizedBox(height: 40),
 
                             _buildTextField(
+                              controller: _emailController,
                               icon: Icons.email_outlined,
                               label: 'Email',
                             ),
                             SizedBox(height: 15.0),
                             _buildTextField(
+                              controller: _passwordController,
                               icon: Icons.lock_outline,
                               label: 'Password',
                               isObscure: true,
@@ -109,27 +157,24 @@ class LoginPage extends StatelessWidget {
                             
                             SizedBox(height: 10.0),
 
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => Home_patient()),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: darkContrastGreen,
-                                foregroundColor: Colors.white,
-                                padding: EdgeInsets.symmetric(vertical: 16),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                            _isLoading
+                            ? Center(child: CircularProgressIndicator(color: darkContrastGreen))
+                            : ElevatedButton(
+                                onPressed: _login,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: darkContrastGreen,
+                                  foregroundColor: Colors.white,
+                                  padding: EdgeInsets.symmetric(vertical: 16),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  elevation: 4,
                                 ),
-                                elevation: 4,
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
                               ),
-                              child: Text(
-                                'Login',
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            ),
                             
                             Spacer(),
                             
@@ -172,11 +217,13 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _buildTextField({
+    required TextEditingController controller,
     required IconData icon,
     required String label,
     bool isObscure = false,
   }) {
     return TextField(
+      controller: controller,
       obscureText: isObscure,
       decoration: InputDecoration(
         prefixIcon: Icon(icon, color: Colors.green[800]),
