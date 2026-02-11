@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_5/scanner.dart';
 import 'package:lab_5/medsInfo.dart';
 import 'package:lab_5/profile.dart';
+import 'package:lab_5/notifications.dart';
 
 class Home_patient extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _Home_patientState extends State<Home_patient> {
       body: _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: darkContrastGreen, // Changed from lightGreen
+        backgroundColor: darkContrastGreen,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
         selectedFontSize: 16.0,
@@ -68,6 +69,8 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   final Color darkContrastGreen = Color(0xFF1B5E20);
   final List<bool> _isChecked = [false, false, false, false];
+  bool _hasNewNotification = true; // State to track new notifications
+
   final List<Map<String, String>> _prescriptions = [
     {'medicine': 'M1', 'time': '08:00 AM', 'dose': '1 tablet'},
     {'medicine': 'M2', 'time': '12:00 PM', 'dose': '2 tablets'},
@@ -80,16 +83,42 @@ class _HomeTabState extends State<HomeTab> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: darkContrastGreen, // Changed to match theme
-        foregroundColor: Colors.white, // White text for the dark background
+        backgroundColor: darkContrastGreen,
+        foregroundColor: Colors.white,
         title: Text('Home',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              // Handle notification icon press
-            },
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(Icons.notifications),
+                onPressed: () {
+                  setState(() {
+                    _hasNewNotification = false; // Clear badge on click
+                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NotificationsPage()),
+                  );
+                },
+              ),
+              if (_hasNewNotification)
+                Positioned(
+                  right: 11,
+                  top: 11,
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                  ),
+                )
+            ],
           ),
         ],
       ),
