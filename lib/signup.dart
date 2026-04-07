@@ -13,6 +13,7 @@ class _SignupPageState extends State<SignupPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
+  bool _obscurePassword = true;
 
   Future<void> _signUp() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty || _usernameController.text.isEmpty) {
@@ -149,7 +150,13 @@ class _SignupPageState extends State<SignupPage> {
                               controller: _passwordController,
                               icon: Icons.lock_outline,
                               label: 'Password',
-                              isObscure: true,
+                              isObscure: _obscurePassword,
+                              showVisibilityToggle: true,
+                              onToggleVisibility: () {
+                                setState(() {
+                                  _obscurePassword = !_obscurePassword;
+                                });
+                              },
                             ),
                             SizedBox(height: 30.0),
                             
@@ -217,12 +224,23 @@ class _SignupPageState extends State<SignupPage> {
     required IconData icon,
     required String label,
     bool isObscure = false,
+    bool showVisibilityToggle = false,
+    VoidCallback? onToggleVisibility,
   }) {
     return TextField(
       controller: controller,
       obscureText: isObscure,
       decoration: InputDecoration(
         prefixIcon: Icon(icon, color: Colors.green[800]),
+        suffixIcon: showVisibilityToggle
+            ? IconButton(
+                icon: Icon(
+                  isObscure ? Icons.visibility_off : Icons.visibility,
+                  color: Colors.green[800],
+                ),
+                onPressed: onToggleVisibility,
+              )
+            : null,
         labelText: label,
         labelStyle: TextStyle(color: Colors.grey[700]),
         filled: true,
